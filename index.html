@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Generation Gap · Campus Intelligence Report 2026</title>
+  <meta name="description" content="A digital intelligence audit of how college students understand antisemitism and anti-Zionism — and what campus leadership needs to know." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    :root {
+      --navy:   #000E2F;
+      --red:    #E4002B;
+      --red-bg: rgba(228,0,43,0.07);
+      --white:  #ffffff;
+      --off:    #f5f5f7;
+      --border: #dddde5;
+      --text:   #18182a;
+      --muted:  #5e5e72;
+      --lt:     #9292a2;
+    }
+    html { scroll-behavior:smooth; }
+    body { font-family:'Inter',sans-serif; font-size:16px; line-height:1.75; color:var(--text); background:var(--white); overflow-x:hidden; }
+
+    /* NAV */
+    #main-nav { position:sticky; top:0; z-index:300; background:var(--navy); border-bottom:2px solid var(--red); display:flex; align-items:center; justify-content:space-between; padding:0 2.5rem; height:60px; }
+    .nav-logo { font-size:12px; font-weight:800; color:var(--white); letter-spacing:.12em; text-transform:uppercase; white-space:nowrap; }
+    .nav-logo span { color:var(--red); }
+    .nav-links { display:flex; gap:3px; list-style:none; }
+    .nav-links a { color:rgba(255,255,255,.6); text-decoration:none; font-size:11px; font-weight:700; padding:5px 10px; border-radius:3px; text-transform:uppercase; letter-spacing:.07em; cursor:pointer; transition:background .18s,color .18s; }
+    .nav-links a:hover,.nav-links a.active { background:var(--red); color:var(--white); }
+    .nav-ham { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:4px; }
+    .nav-ham span { display:block; width:22px; height:2px; background:var(--white); border-radius:2px; }
+
+    /* LAYOUT */
+    .s-wrap { padding:80px 2.5rem; max-width:1100px; margin:0 auto; }
+    .bg-light { background:var(--off); }
+    hr.rule { border:none; border-top:1px solid var(--border); }
+    .eyebrow { font-size:11px; font-weight:800; color:var(--red); text-transform:uppercase; letter-spacing:.14em; margin-bottom:10px; }
+    .s-title { font-size:clamp(22px,3vw,32px); font-weight:900; line-height:1.15; color:var(--navy); letter-spacing:-.02em; margin-bottom:10px; }
+    .divider  { width:44px; height:3px; background:var(--red); border-radius:2px; margin:14px 0 22px; }
+    .s-body   { font-size:16px; color:var(--muted); line-height:1.82; max-width:720px; }
+    .fade-in  { opacity:0; transform:translateY(26px); transition:opacity .65s ease,transform .65s ease; }
+    .fade-in.visible { opacity:1; transform:translateY(0); }
+    .interp-box { margin-top:28px; padding:18px 22px; background:var(--red-bg); border-left:3px solid var(--red); border-radius:0 5px 5px 0; }
+    .interp-box strong { font-size:14px; font-weight:800; color:var(--navy); display:block; margin-bottom:6px; }
+    .interp-box p { font-size:13px; color:var(--muted); line-height:1.72; }
+
+    /* HERO */
+    #hero { background:var(--navy); color:var(--white); padding:80px 2.5rem 72px; text-align:center; position:relative; overflow:hidden; }
+    #hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 80% 55% at 50% -5%,rgba(228,0,43,.16) 0%,transparent 65%); pointer-events:none; }
+    .hero-pill { display:inline-flex; align-items:center; gap:8px; background:var(--red); color:var(--white); font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; padding:6px 16px; border-radius:2px; margin-bottom:24px; }
+    .hero-pill::before { content:''; width:6px; height:6px; background:rgba(255,255,255,.7); border-radius:50%; }
+    #hero h1 { font-size:clamp(28px,5.5vw,58px); font-weight:900; line-height:1.07; max-width:880px; margin:0 auto 16px; letter-spacing:-.03em; }
+    #hero h1 em { font-style:normal; color:var(--red); }
+    .hero-rq { font-size:clamp(14px,1.6vw,17px); color:rgba(255,255,255,.55); font-style:italic; max-width:740px; margin:0 auto 22px; line-height:1.6; border:1px solid rgba(255,255,255,.1); border-radius:4px; padding:14px 22px; background:rgba(255,255,255,.04); }
+    .hero-lede { font-size:clamp(15px,1.7vw,18px); color:rgba(255,255,255,.75); max-width:820px; margin:0 auto 36px; line-height:1.75; }
+    .hero-cta { display:inline-flex; align-items:center; gap:10px; background:var(--red); color:var(--white); font-family:inherit; font-size:13px; font-weight:800; padding:14px 30px; border-radius:3px; text-decoration:none; letter-spacing:.06em; text-transform:uppercase; border:none; cursor:pointer; transition:opacity .2s,transform .2s; }
+    .hero-cta:hover { opacity:.88; transform:translateY(-1px); }
+    .hero-findings { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1px; background:rgba(255,255,255,.08); margin-top:52px; border-top:1px solid rgba(255,255,255,.1); overflow:hidden; }
+    .hf-item { background:rgba(0,14,47,.6); padding:24px 20px; text-align:center; }
+    .hf-num { font-size:clamp(26px,3.5vw,38px); font-weight:900; color:var(--white); letter-spacing:-.03em; line-height:1; }
+    .hf-num sup { color:var(--red); font-size:.55em; vertical-align:super; }
+    .hf-label { font-size:11px; color:rgba(255,255,255,.45); text-transform:uppercase; letter-spacing:.09em; margin-top:6px; line-height:1.4; }
+
+    /* INTRO */
+    .intro-grid { display:grid; grid-template-columns:1fr 1fr; gap:28px; margin-top:40px; }
+    .intro-box { border:1px solid var(--border); border-top:3px solid var(--red); border-radius:6px; padding:24px 22px; background:var(--white); }
+    .intro-box h3 { font-size:15px; font-weight:800; color:var(--navy); margin-bottom:10px; }
+    .intro-box p  { font-size:13px; color:var(--muted); line-height:1.72; }
+
+    /* EVIDENCE TABS */
+    .evidence-tabs { display:flex; gap:6px; margin:28px 0 32px; flex-wrap:wrap; }
+    .etab { font-size:12px; font-weight:700; padding:8px 16px; border-radius:3px; cursor:pointer; border:1px solid var(--border); background:var(--white); color:var(--muted); letter-spacing:.05em; text-transform:uppercase; transition:all .2s; }
+    .etab.active,.etab:hover { background:var(--red); color:var(--white); border-color:var(--red); }
+    .evidence-panel { display:none; }
+    .evidence-panel.active { display:block; }
+
+    /* TERM CARDS */
+    .term-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:16px; margin-top:28px; }
+    .term-card { background:var(--white); border:1px solid var(--border); border-radius:6px; padding:20px 18px; }
+    .term-name { font-size:13px; font-weight:800; color:var(--navy); margin-bottom:10px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:4px; }
+    .term-badge { font-size:10px; font-weight:800; padding:2px 8px; border-radius:3px; text-transform:uppercase; letter-spacing:.06em; }
+    .tb-red    { background:var(--red-bg); color:var(--red); }
+    .tb-orange { background:#fff3cd; color:#856404; }
+    .tb-gray   { background:#f0f0f2; color:#666; }
+    .platform-row { display:flex; align-items:center; gap:8px; margin-bottom:7px; }
+    .plat-label { font-size:11px; font-weight:700; color:var(--lt); width:80px; flex-shrink:0; text-transform:uppercase; letter-spacing:.06em; }
+    .plat-bar-wrap { flex:1; height:6px; background:var(--off); border-radius:3px; overflow:hidden; }
+    .plat-bar { height:100%; border-radius:3px; }
+    .bar-yt  { background:#E4002B; } .bar-web { background:#000E2F; } .bar-news { background:#9292a2; }
+    .plat-val { font-size:11px; font-weight:700; color:var(--text); width:36px; text-align:right; flex-shrink:0; }
+    .term-note { font-size:11px; color:var(--lt); line-height:1.55; margin-top:10px; padding-top:10px; border-top:1px solid var(--border); }
+
+    /* PIPELINE TABLE */
+    .pipeline-wrap { overflow-x:auto; margin-top:32px; border-radius:6px; border:1px solid var(--border); }
+    table.pipeline { width:100%; border-collapse:collapse; font-size:13px; min-width:540px; }
+    .pipeline thead tr { background:var(--navy); }
+    .pipeline th { color:var(--white); padding:13px 16px; font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.09em; text-align:left; }
+    .pipeline td { padding:13px 16px; border-bottom:1px solid var(--border); vertical-align:top; font-size:13px; color:var(--muted); line-height:1.55; }
+    .pipeline tbody tr:last-child td { border-bottom:none; }
+    .pipeline tbody tr:nth-child(odd) td { background:#fafafa; }
+    .pipeline td:first-child { font-weight:700; color:var(--navy); }
+    .pip-g { display:inline-block; background:#d4edda; color:#155724; font-size:10px; font-weight:800; padding:2px 8px; border-radius:3px; text-transform:uppercase; letter-spacing:.06em; }
+    .pip-y { display:inline-block; background:#fff3cd; color:#856404; font-size:10px; font-weight:800; padding:2px 8px; border-radius:3px; text-transform:uppercase; letter-spacing:.06em; }
+    .pip-r { display:inline-block; background:#f8d7da; color:#721c24; font-size:10px; font-weight:800; padding:2px 8px; border-radius:3px; text-transform:uppercase; letter-spacing:.06em; }
+
+    /* SENTIMENT */
+    .sent-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px; margin-top:28px; }
+    .sent-card { background:var(--white); border:1px solid var(--border); border-radius:6px; padding:20px 18px; }
+    .sent-platform { font-size:12px; font-weight:800; color:var(--navy); text-transform:uppercase; letter-spacing:.08em; margin-bottom:14px; display:flex; align-items:center; gap:8px; }
+    .sent-dot { width:10px; height:10px; border-radius:50%; }
+    .sd-r { background:#E4002B; } .sd-n { background:#000E2F; } .sd-g { background:#888; } .sd-o { background:#b8860b; }
+    .sent-row { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+    .sent-lbl { font-size:11px; color:var(--muted); width:56px; flex-shrink:0; }
+    .sent-bw  { flex:1; height:8px; background:var(--off); border-radius:4px; overflow:hidden; }
+    .sent-bf  { height:100%; border-radius:4px; }
+    .fp { background:#28a745; } .fn { background:#dc3545; } .fu { background:#aaa; }
+    .sent-pct { font-size:11px; font-weight:700; color:var(--text); width:32px; text-align:right; }
+    .sent-note { font-size:11px; color:var(--lt); margin-top:10px; padding-top:10px; border-top:1px solid var(--border); line-height:1.55; }
+
+    /* STAT TRIO */
+    .stat-trio { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:28px; }
+    .stat-box { background:var(--white); border:1px solid var(--border); border-top:3px solid var(--red); border-radius:6px; padding:22px 18px; text-align:center; }
+    .stat-box .big { font-size:clamp(32px,4vw,44px); font-weight:900; color:var(--navy); line-height:1; letter-spacing:-.03em; }
+    .stat-box .big span { color:var(--red); }
+    .stat-box p { font-size:12px; color:var(--lt); margin-top:8px; line-height:1.5; }
+
+    /* VOCAB GAP */
+    .gap-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:32px; }
+    .gap-card { border:1px solid var(--border); border-top:3px solid var(--red); border-radius:6px; padding:22px 20px; background:var(--white); }
+    .gap-card.dark { background:var(--navy); border-color:var(--navy); }
+    .gap-card h4 { font-size:14px; font-weight:800; color:var(--navy); margin-bottom:12px; }
+    .gap-card.dark h4 { color:var(--white); }
+    .gap-card ul { font-size:13px; color:var(--muted); line-height:1.72; padding-left:18px; }
+    .gap-card.dark ul { color:rgba(255,255,255,.65); }
+    .gap-card ul li { margin-bottom:6px; }
+
+    /* PULL QUOTE */
+    .pull-quote { margin:44px 0; padding:28px 32px 28px 28px; border-left:4px solid var(--red); border-radius:0 6px 6px 0; background:var(--red-bg); position:relative; }
+    .pull-quote::before { content:'\201C'; font-size:88px; color:var(--red); opacity:.18; position:absolute; top:-10px; left:16px; font-family:Georgia,serif; line-height:1; pointer-events:none; }
+    .pull-quote p { font-size:clamp(16px,2vw,20px); font-style:italic; color:var(--navy); font-weight:600; line-height:1.55; padding-left:22px; }
+    .pull-quote cite { display:block; font-size:12px; color:var(--lt); margin-top:14px; font-style:normal; font-weight:700; padding-left:22px; text-transform:uppercase; letter-spacing:.08em; }
+
+    /* COMSCORE */
+    .comscore-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(175px,1fr)); gap:16px; margin-top:28px; }
+    .cms-card { background:var(--white); border:1px solid var(--border); border-radius:6px; padding:18px 16px; }
+    .cms-label { font-size:11px; font-weight:700; color:var(--lt); text-transform:uppercase; letter-spacing:.08em; margin-bottom:10px; }
+    .cms-bar-wrap { height:6px; background:var(--off); border-radius:3px; overflow:hidden; margin-bottom:8px; }
+    .cms-bar { height:100%; border-radius:3px; }
+    .cb-r { background:var(--red); } .cb-n { background:var(--navy); } .cb-g { background:#888; } .cb-gold { background:#b8860b; } .cb-grn { background:#2d7a4f; }
+    .cms-stat { font-size:22px; font-weight:900; color:var(--navy); letter-spacing:-.02em; }
+    .cms-sub  { font-size:11px; color:var(--lt); margin-top:3px; line-height:1.4; }
+
+    /* ENGAGEMENT ASYMMETRY */
+    .eng-compare { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:28px; }
+    .eng-box { border:1px solid var(--border); border-radius:6px; padding:22px 20px; background:var(--white); position:relative; overflow:hidden; }
+    .eng-box::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; }
+    .eng-box.anti-z::before { background:var(--red); }
+    .eng-box.anti-s::before { background:var(--navy); }
+    .eng-box h4 { font-size:14px; font-weight:800; color:var(--navy); margin-bottom:14px; }
+    .eng-row { display:flex; justify-content:space-between; align-items:center; font-size:13px; color:var(--muted); padding:6px 0; border-bottom:1px solid var(--border); }
+    .eng-row:last-child { border-bottom:none; }
+    .eng-row strong { color:var(--navy); font-weight:700; }
+
+    /* AI TABLE */
+    .table-legend { display:flex; gap:18px; margin:14px 0 16px; flex-wrap:wrap; }
+    .leg-item { display:flex; align-items:center; gap:7px; font-size:12px; font-weight:600; color:var(--muted); }
+    .leg-dot { width:10px; height:10px; border-radius:2px; }
+    .leg-dot.g { background:#28a745; } .leg-dot.y { background:#e6a817; } .leg-dot.r { background:#dc3545; }
+    .ai-wrap { overflow-x:auto; border-radius:6px; border:1px solid var(--border); }
+    table.ai-table { width:100%; border-collapse:collapse; font-size:13px; min-width:560px; }
+    .ai-table thead tr { background:var(--navy); }
+    .ai-table th { color:var(--white); padding:14px 16px; font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.09em; text-align:left; }
+    .ai-table td { padding:14px 16px; border-bottom:1px solid var(--border); vertical-align:top; line-height:1.55; }
+    .ai-table tbody tr:last-child td { border-bottom:none; }
+    .ai-table tbody tr:nth-child(odd) td { background:#fafafa; }
+    .q-cell { font-weight:700; color:var(--navy); font-size:13px; }
+    .badge { display:inline-block; font-size:10px; font-weight:800; padding:3px 8px; border-radius:3px; text-transform:uppercase; letter-spacing:.07em; margin-bottom:5px; }
+    .bg { background:#d4edda; color:#155724; } .by { background:#fff3cd; color:#856404; } .br { background:#f8d7da; color:#721c24; }
+    .bt { display:block; font-size:12px; color:#666; font-weight:400; line-height:1.5; }
+
+    /* AI CONSISTENCY NOTE */
+    .ai-note { margin-top:12px; padding:10px 14px; border-radius:4px; font-size:12px; line-height:1.6; }
+    .ai-note.consistent { background:#d4edda; color:#155724; border-left:3px solid #28a745; }
+    .ai-note.partial    { background:#fff3cd; color:#856404; border-left:3px solid #e6a817; }
+    .ai-note.conflict   { background:#f8d7da; color:#721c24; border-left:3px solid #dc3545; }
+
+    /* RECS */
+    .rec-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:24px; margin-top:44px; }
+    .rec-card { background:var(--white); border:1px solid var(--border); border-radius:8px; padding:28px 26px; position:relative; overflow:hidden; transition:transform .2s,box-shadow .2s; }
+    .rec-card:hover { transform:translateY(-3px); box-shadow:0 8px 30px rgba(0,14,47,.09); }
+    .rec-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:var(--red); }
+    .rec-num { font-size:48px; font-weight:900; color:rgba(228,0,43,.1); line-height:1; margin-bottom:8px; letter-spacing:-.04em; }
+    .rec-card h3 { font-size:16px; font-weight:800; color:var(--navy); margin-bottom:12px; line-height:1.3; }
+    .rec-card p  { font-size:13px; color:var(--muted); line-height:1.72; margin-bottom:10px; }
+    .rec-evidence { font-size:12px; color:var(--red); font-weight:600; font-style:italic; border-top:1px solid var(--border); padding-top:10px; margin-top:6px; }
+    .rec-tradeoff { font-size:12px; color:var(--lt); margin-top:6px; }
+    .rec-tag { display:inline-block; margin-top:14px; font-size:10px; font-weight:800; color:var(--red); text-transform:uppercase; letter-spacing:.1em; border:1px solid rgba(228,0,43,.3); padding:3px 8px; border-radius:3px; }
+
+    /* CONCLUSION */
+    .conclusion-wrap { max-width:760px; }
+    .conclusion-wrap p { font-size:17px; color:var(--muted); line-height:1.85; margin-bottom:20px; }
+    .conclusion-wrap p strong { color:var(--navy); font-weight:800; }
+    .action-box { margin-top:32px; border:1px solid rgba(228,0,43,.25); border-left:4px solid var(--red); border-radius:0 6px 6px 0; padding:22px 26px; background:var(--red-bg); }
+    .action-box p { font-size:15px; color:var(--navy); font-weight:600; line-height:1.65; margin:0; }
+
+    /* REFERENCES */
+    .ref-group { margin-bottom:32px; }
+    .ref-group h3 { font-size:13px; font-weight:800; color:var(--navy); text-transform:uppercase; letter-spacing:.08em; margin-bottom:14px; padding-bottom:8px; border-bottom:2px solid var(--red); display:inline-block; }
+    .ref-list { list-style:none; }
+    .ref-list li { font-size:13px; color:var(--muted); line-height:1.65; padding:8px 0 8px 18px; border-bottom:1px solid var(--border); position:relative; }
+    .ref-list li::before { content:'—'; position:absolute; left:0; color:var(--red); font-weight:700; }
+    .ref-list li:last-child { border-bottom:none; }
+    .ref-list a { color:var(--red); text-decoration:none; font-weight:600; }
+    .ref-list a:hover { text-decoration:underline; }
+
+    /* FOOTER */
+    footer { background:var(--navy); color:rgba(255,255,255,.55); padding:48px 2.5rem; text-align:center; border-top:2px solid var(--red); }
+    .f-logo { font-size:13px; font-weight:900; color:var(--white); text-transform:uppercase; letter-spacing:.12em; margin-bottom:8px; }
+    footer p { font-size:13px; line-height:1.8; }
+    .f-links { display:flex; justify-content:center; gap:28px; margin-top:18px; flex-wrap:wrap; }
+    .f-links a { font-size:12px; font-weight:700; color:rgba(255,255,255,.5); text-transform:uppercase; letter-spacing:.08em; text-decoration:none; }
+    .f-links a:hover { color:var(--red); }
+
+    /* RESPONSIVE */
+    @media(max-width:720px) {
+      .nav-links { display:none; }
+      .nav-links.open { display:flex; flex-direction:column; position:absolute; top:60px; left:0; right:0; background:var(--navy); padding:12px; border-bottom:2px solid var(--red); gap:4px; z-index:299; }
+      .nav-ham { display:flex; }
+      #hero { padding:60px 1.5rem 52px; }
+      .s-wrap { padding:60px 1.5rem; }
+      .intro-grid,.gap-grid,.eng-compare { grid-template-columns:1fr; }
+      .stat-trio { grid-template-columns:1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <div class="nav-logo"><span>//</span> Campus Intelligence Report</div>
+  <ul class="nav-links" id="nav-list">
+    <li><a href="#executive-summary"   class="nav-link">I. Summary</a></li>
+    <li><a href="#introduction"        class="nav-link">II. Background</a></li>
+    <li><a href="#evidence"            class="nav-link">III. Evidence</a></li>
+    <li><a href="#recommendations"     class="nav-link">IV. Recommendations</a></li>
+    <li><a href="#conclusion"          class="nav-link">V. Conclusion</a></li>
+    <li><a href="#references"          class="nav-link">VI. References</a></li>
+  </ul>
+  <div class="nav-ham" id="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- ═══════════════════════════════
+     I — EXECUTIVE SUMMARY
+═══════════════════════════════ -->
+<section id="executive-summary">
+  <div id="hero">
+    <div class="hero-pill">2026 · Digital Intelligence Audit · Campus Leadership Report</div>
+    <h1>The Generation Gap: How College Students Understand <em>Antisemitism</em> and <em>Anti-Zionism</em></h1>
+    <div class="hero-rq">"Why do college students frame antisemitism and anti-Zionism differently than previous generations — and what does the digital evidence suggest about how that gap emerged?"</div>
+    <p class="hero-lede">A generation is learning about one of the world's most contested conflicts almost entirely through YouTube and social media — and as a result, they're developing a completely different vocabulary than the one journalism uses to cover the same conflict. This audit maps that gap so campus leadership can respond with clarity, not reaction.</p>
+    <a href="#introduction" class="hero-cta">Read the Full Report ↓</a>
+    <div class="hero-findings">
+      <div class="hf-item">
+        <div class="hf-num">75<sup>M</sup></div>
+        <div class="hf-label">Total content reach tracked — mostly TikTok algorithmic amplification of micro-accounts</div>
+      </div>
+      <div class="hf-item">
+        <div class="hf-num">5<sup>yr</sup></div>
+        <div class="hf-label">Google Trends analysis across 3 platform filters and 5 key terms, 2021–2026</div>
+      </div>
+      <div class="hf-item">
+        <div class="hf-num">0</div>
+        <div class="hf-label">YouTube search signal for "Apartheid" across the full five-year window — 48 states register nothing</div>
+      </div>
+      <div class="hf-item">
+        <div class="hf-num">50<sup>×</sup></div>
+        <div class="hf-label">Anti-Zionist content outperforms antisemitism-awareness content in social engagement per post</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════
+     II — INTRODUCTION & BACKGROUND
+═══════════════════════════════ -->
+<hr class="rule" />
+<section id="introduction">
+  <div class="s-wrap fade-in">
+    <div class="eyebrow">Section II</div>
+    <h2 class="s-title">Introduction &amp; Background</h2>
+    <div class="divider"></div>
+    <p class="s-body">Since October 7, 2023, U.S. campuses have seen a sharp increase in both reported antisemitic incidents and student activism around Israeli-Palestinian policy. Campus leadership has largely relied on faculty reports, incident logs, and legacy media — while students experience the issue through search algorithms, social feeds, and peer influencers. This audit bridges that gap. The central finding is not that students are uninformed. It is that they are informed differently, by different institutions, in a different language — and the gap between those languages is now measurable.</p>
+    <div class="intro-grid">
+      <div class="intro-box">
+        <h3>The Problem from the Provost's Perspective</h3>
+        <p>The institution faces a <strong>"vocabulary gap"</strong> and <strong>"information gap"</strong> between how students and faculty/administrators understand key terms: antisemitism, anti-Zionism, decolonization, apartheid, and "Free Palestine." Policies written in one vocabulary are being applied to a campus community operating in another — producing miscommunication, conflict escalation, and institutional credibility loss.</p>
+      </div>
+      <div class="intro-box">
+        <h3>Data Sources &amp; Scope</h3>
+        <p>Evidence is drawn from three primary datasets: Google Trends (YouTube, Web, and News search filters, 2021–2026), Brand24 social listening data (75M total reach, March–April 2026), and Comscore audience and content engagement data (February–April 2026). AI stress testing was conducted across Claude, ChatGPT, and Gemini using a structured question logger applied to all three datasets.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════
+     III — EVIDENCE & ANALYSIS
+═══════════════════════════════ -->
+<hr class="rule" />
+<section id="evidence" class="bg-light">
+  <div class="s-wrap fade-in">
+    <div class="eyebrow">Section III</div>
+    <h2 class="s-title">Evidence &amp; Analysis</h2>
+    <div class="divider"></div>
+    <p class="s-body">Three subsections reflect the three primary data streams. Select each tab to explore findings. The AI stress test results — drawn from structured questioning of Claude, ChatGPT, and Gemini across all three datasets — are integrated throughout.</p>
+
+    <div class="evidence-tabs">
+      <div class="etab active" data-panel="panel-a">III.A — Google Trends</div>
+      <div class="etab"        data-panel="panel-b">III.B — Brand24 Sentiment</div>
+      <div class="etab"        data-panel="panel-c">III.C — Comscore + AI Stress Test</div>
+    </div>
+
+    <!-- ══ PANEL A: GOOGLE TRENDS ══ -->
+    <div class="evidence-panel active" id="panel-a">
+      <div class="eyebrow">Team 1 · Google Trends · YouTube / Web / News Search · United States · March 2021–March 2026</div>
+      <h3 style="font-size:20px;font-weight:800;color:var(--navy);margin-bottom:10px;">The Signal: Three Platforms, Three Vocabularies</h3>
+      <p class="s-body">The same five terms were tracked across YouTube search, general web search, and Google News search over sixty months. The three platforms are not different windows onto the same behavior — they are structurally different modes of engagement with political vocabulary. AI stress testing across all three CSVs confirmed the Google Trends findings with consistent agreement: the terms are moving in fundamentally different directions, responding to different triggers, and being searched by different audiences.</p>
+
+      <div style="margin-top:32px;">
+        <div class="eyebrow" style="margin-bottom:14px;">Relative Search Presence by Term — Combined 5-Term Scale (Apartheid = 100 ceiling)</div>
+        <div class="term-grid">
+          <div class="term-card">
+            <div class="term-name">Antisemitism <span class="term-badge tb-red">Full Pipeline</span></div>
+            <div class="platform-row"><span class="plat-label">YouTube</span><div class="plat-bar-wrap"><div class="plat-bar bar-yt" style="width:65%"></div></div><span class="plat-val">65</span></div>
+            <div class="platform-row"><span class="plat-label">Web</span><div class="plat-bar-wrap"><div class="plat-bar bar-web" style="width:65%"></div></div><span class="plat-val">65</span></div>
+            <div class="platform-row"><span class="plat-label">News</span><div class="plat-bar-wrap"><div class="plat-bar bar-news" style="width:100%"></div></div><span class="plat-val">100%</span></div>
+            <div class="term-note">Standalone peak: 100 (Oct 2022, Kanye/Kyrie). Oct 7 attack peak: only 35 — 65% lower than a celebrity controversy. 2025 avg baseline: ~17. Top query growth: "kanye west antisemitic" +2,500%; "college antisemitism" +1,500%. Only term to complete the full discovery → institutionalization pipeline.</div>
+          </div>
+          <div class="term-card">
+            <div class="term-name">Anti-Zionism <span class="term-badge tb-orange">No News</span></div>
+            <div class="platform-row"><span class="plat-label">YouTube</span><div class="plat-bar-wrap"><div class="plat-bar bar-yt" style="width:4%"></div></div><span class="plat-val">2–4</span></div>
+            <div class="platform-row"><span class="plat-label">Web</span><div class="plat-bar-wrap"><div class="plat-bar bar-web" style="width:55%"></div></div><span class="plat-val">55</span></div>
+            <div class="platform-row"><span class="plat-label">News</span><div class="plat-bar-wrap"><div class="plat-bar bar-news" style="width:2%"></div></div><span class="plat-val">~0</span></div>
+            <div class="term-note">Emerged from zero post-Oct 2023. Max combined index: 4 (Jun 2024). Standalone peak: 100 (Dec 2023). Every single query is Breakout (>5,000% growth). Driven by Munk Debate on YouTube. Present in only 2 states' news search across 5 years — public adopted this vocabulary without journalism leading.</div>
+          </div>
+          <div class="term-card">
+            <div class="term-name">Decolonization <span class="term-badge tb-orange">No News</span></div>
+            <div class="platform-row"><span class="plat-label">YouTube</span><div class="plat-bar-wrap"><div class="plat-bar bar-yt" style="width:60%"></div></div><span class="plat-val">~60</span></div>
+            <div class="platform-row"><span class="plat-label">Web</span><div class="plat-bar-wrap"><div class="plat-bar bar-web" style="width:85%"></div></div><span class="plat-val">85</span></div>
+            <div class="platform-row"><span class="plat-label">News</span><div class="plat-bar-wrap"><div class="plat-bar bar-news" style="width:2%"></div></div><span class="plat-val">~0</span></div>
+            <div class="term-note">Peak combined index: 19 (Apr 2024). Follows academic calendar — spikes every April with spring semester. Semantic split: historical uses declining (–80%), ideological uses rising (+1,200%). "Decolonial theory" +1,200%. Three distinct audiences: AP students, ideological users, general public.</div>
+          </div>
+          <div class="term-card">
+            <div class="term-name">Apartheid <span class="term-badge tb-gray">Inverted Pipeline</span></div>
+            <div class="platform-row"><span class="plat-label">YouTube</span><div class="plat-bar-wrap"><div class="plat-bar bar-yt" style="width:0%"></div></div><span class="plat-val">0</span></div>
+            <div class="platform-row"><span class="plat-label">Web</span><div class="plat-bar-wrap"><div class="plat-bar bar-web" style="width:22%"></div></div><span class="plat-val">~22</span></div>
+            <div class="platform-row"><span class="plat-label">News</span><div class="plat-bar-wrap"><div class="plat-bar bar-news" style="width:0%"></div></div><span class="plat-val">0</span></div>
+            <div class="term-note">Peak combined index: 100 (Oct 2023) — the ceiling, making it the "dominant" term by scale. But: zero YouTube signal. Zero news search signal. 48 states register no YouTube volume. Amnesty/HRW reports and ICJ proceedings did not transfer to popular or journalistic vocabulary.</div>
+          </div>
+          <div class="term-card">
+            <div class="term-name">Free Palestine <span class="term-badge tb-red">Cultural Sat.</span></div>
+            <div class="platform-row"><span class="plat-label">YouTube</span><div class="plat-bar-wrap"><div class="plat-bar bar-yt" style="width:58%"></div></div><span class="plat-val">58</span></div>
+            <div class="platform-row"><span class="plat-label">Web</span><div class="plat-bar-wrap"><div class="plat-bar bar-web" style="width:88%"></div></div><span class="plat-val">88</span></div>
+            <div class="platform-row"><span class="plat-label">News</span><div class="plat-bar-wrap"><div class="plat-bar bar-news" style="width:18%"></div></div><span class="plat-val">18</span></div>
+            <div class="term-note">Peak combined index: 58 (Oct–Nov 2023). Broadest geographic spread of any term — 49/50 states. Only Wyoming = 0. Michigan leads (100) driven by Dearborn Arab-American community. "ishowspeed palestine" +700%; "from the river to the sea" +400%. Floor rises after each crisis cycle.</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:36px;">
+        <div class="eyebrow" style="margin-bottom:14px;">The Discovery → Comprehension → Institutionalization Pipeline</div>
+        <div class="pipeline-wrap">
+          <table class="pipeline">
+            <thead><tr><th>Term</th><th>YouTube (Discovery)</th><th>Web Search (Comprehension)</th><th>News Search (Institutionalization)</th></tr></thead>
+            <tbody>
+              <tr><td>Antisemitism</td><td><span class="pip-g">Present</span> — celebrity-mediated (Kanye, Kyrie)</td><td><span class="pip-g">Present</span> — definitional (+2,500% query growth)</td><td><span class="pip-g">Present</span> — campus/legislative/ADL frame</td></tr>
+              <tr><td>Anti-Zionism</td><td><span class="pip-g">Present</span> — Munk Debate creator content</td><td><span class="pip-g">Present</span> — "is anti-Zionism antisemitism" Breakout</td><td><span class="pip-r">Absent</span> — 2 states, 5 years</td></tr>
+              <tr><td>Decolonization</td><td><span class="pip-g">Present</span> — ideology + semester calendar</td><td><span class="pip-g">Present</span> — AP homework + activist searching</td><td><span class="pip-r">Absent</span> — below threshold nationally</td></tr>
+              <tr><td>Apartheid</td><td><span class="pip-r">Absent</span> — zero signal, 48 states</td><td><span class="pip-y">Partial</span> — NGO/HRW report audience only</td><td><span class="pip-r">Absent</span> — absolute zero, 60 months</td></tr>
+              <tr><td>Free Palestine</td><td><span class="pip-g">Present</span> — music/creators (IShowSpeed, Macklemore)</td><td><span class="pip-g">Present</span> — "why is everyone saying free palestine"</td><td><span class="pip-y">Partial</span> — protest frame only, declining –70%</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="interp-box">
+        <strong>AI Stress Test Finding — Google Trends (All 3 AIs Consistent)</strong>
+        <p>All three AI systems agreed on the core finding: a pop culture controversy (Kanye/Kyrie, Oct 2022) drove more antisemitism searches than the October 7 mass-casualty attack (index 100 vs. 35). Claude added the most analytically significant detail: anti-Zionism had essentially zero search history before this period, meaning every Breakout query represents a structural vocabulary shift, not just a spike. The definitional search queries — "what is anti-Zionism," "anti-Zionism vs antisemitism" — confirm students are in a genuine learning phase about these distinctions, not uniformly committed to either view. Campus programming that provides factual definitional frameworks could address a measurable informational gap.</p>
+      </div>
+    </div>
+
+    <!-- ══ PANEL B: BRAND24 ══ -->
+    <div class="evidence-panel" id="panel-b">
+      <div class="eyebrow">Team 2 · Brand24 Social Listening · TikTok, X, Bluesky, Reddit, YouTube · March 30–April 13, 2026</div>
+      <h3 style="font-size:20px;font-weight:800;color:var(--navy);margin-bottom:10px;">The Evidence: Social Sentiment &amp; Platform Framing</h3>
+      <p class="s-body" style="margin-bottom:24px;">The Brand24 data tracked five topic datasets with a combined reach of 75 million — mostly through TikTok's algorithmic amplification of micro-accounts. The most important finding across all AI analysis: the same topic reads completely differently depending on the platform it's in, and small accounts with 44–471 followers are generating millions of views through algorithmic amplification alone.</p>
+
+      <div class="stat-trio">
+        <div class="stat-box">
+          <div class="big">75<span>M</span></div>
+          <p>Total reach across all datasets — TikTok algorithmic amplification is the primary driver</p>
+        </div>
+        <div class="stat-box">
+          <div class="big">4<span>×</span></div>
+          <p>Higher per-mention engagement on anti-Zionism content vs. antisemitism (245K interactions / 121 mentions vs. 646K / 2,210)</p>
+        </div>
+        <div class="stat-box">
+          <div class="big">3,250<span>%</span></div>
+          <p>Surge in U.S. campus Jewish Students mentions in one reporting period (2 → 67 mentions)</p>
+        </div>
+      </div>
+
+      <div style="margin-top:32px;">
+        <div class="eyebrow" style="margin-bottom:14px;">Sentiment by Platform — Same Topic, Completely Different Containers</div>
+        <div class="sent-grid">
+          <div class="sent-card">
+            <div class="sent-platform"><div class="sent-dot sd-r"></div>TikTok</div>
+            <div class="sent-row"><span class="sent-lbl">Positive</span><div class="sent-bw"><div class="sent-bf fp" style="width:29%"></div></div><span class="sent-pct">29%</span></div>
+            <div class="sent-row"><span class="sent-lbl">Negative</span><div class="sent-bw"><div class="sent-bf fn" style="width:21%"></div></div><span class="sent-pct">21%</span></div>
+            <div class="sent-row"><span class="sent-lbl">Neutral</span><div class="sent-bw"><div class="sent-bf fu" style="width:50%"></div></div><span class="sent-pct">50%</span></div>
+            <div class="sent-note">Only platform where content scores significantly positive. Micro-accounts with 44–471 followers generating millions of views. Follower count does not drive reach — the algorithm does. @nadia.khaledd (754K followers) drove 709K reach on a single April 10 post.</div>
+          </div>
+          <div class="sent-card">
+            <div class="sent-platform"><div class="sent-dot sd-n"></div>X / Twitter</div>
+            <div class="sent-row"><span class="sent-lbl">Positive</span><div class="sent-bw"><div class="sent-bf fp" style="width:4%"></div></div><span class="sent-pct">4%</span></div>
+            <div class="sent-row"><span class="sent-lbl">Negative</span><div class="sent-bw"><div class="sent-bf fn" style="width:77%"></div></div><span class="sent-pct">77%</span></div>
+            <div class="sent-row"><span class="sent-lbl">Neutral</span><div class="sent-bw"><div class="sent-bf fu" style="width:19%"></div></div><span class="sent-pct">19%</span></div>
+            <div class="sent-note">Runs 77% negative — the highest of any platform. X's architecture surfaces conflict and outrage. Antisemitism mentions: 94. Near-zero presence in campus/youth-filtered datasets. X is essentially absent from where students are.</div>
+          </div>
+          <div class="sent-card">
+            <div class="sent-platform"><div class="sent-dot sd-g"></div>News Coverage</div>
+            <div class="sent-row"><span class="sent-lbl">Positive</span><div class="sent-bw"><div class="sent-bf fp" style="width:10%"></div></div><span class="sent-pct">10%</span></div>
+            <div class="sent-row"><span class="sent-lbl">Negative</span><div class="sent-bw"><div class="sent-bf fn" style="width:88%"></div></div><span class="sent-pct">88%</span></div>
+            <div class="sent-row"><span class="sent-lbl">Neutral</span><div class="sent-bw"><div class="sent-bf fu" style="width:2%"></div></div><span class="sent-pct">2%</span></div>
+            <div class="sent-note">Near-total negative framing. Antisemitism: 1,504 of 2,210 total mentions (68%) are from news sources. Anti-Zionism: zero news mentions. Journalism covers antisemitism through institutional actors — ADL, ADL statements, congressional hearings, campus incidents.</div>
+          </div>
+          <div class="sent-card">
+            <div class="sent-platform"><div class="sent-dot sd-o"></div>U.S. Campus / Youth</div>
+            <div class="sent-row"><span class="sent-lbl">Positive</span><div class="sent-bw"><div class="sent-bf fp" style="width:39%"></div></div><span class="sent-pct">39%</span></div>
+            <div class="sent-row"><span class="sent-lbl">Negative</span><div class="sent-bw"><div class="sent-bf fn" style="width:7%"></div></div><span class="sent-pct">7%</span></div>
+            <div class="sent-row"><span class="sent-lbl">Neutral</span><div class="sent-bw"><div class="sent-bf fu" style="width:54%"></div></div><span class="sent-pct">54%</span></div>
+            <div class="sent-note">The only dataset with clearly positive majority sentiment (39% positive, 7% negative). U.S. campus conversation about Jewish student life leans affirming — Hillel programming, Passover, cultural identity. Top voices: Unpacked (YouTube, 50.7% share of voice), Hillel. Zero Twitter/X, zero news.</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:32px;">
+        <div class="eyebrow" style="margin-bottom:14px;">Antisemitism vs. Anti-Zionism — Key Dataset Metrics (March 30–April 13, 2026)</div>
+        <div class="eng-compare">
+          <div class="eng-box anti-s">
+            <h4>Antisemitism Dataset</h4>
+            <div class="eng-row"><span>Total mentions</span><strong>2,210 (–31% from prior period)</strong></div>
+            <div class="eng-row"><span>Total reach</span><strong>24M (–49%)</strong></div>
+            <div class="eng-row"><span>Negative sentiment</span><strong>24% (528 mentions)</strong></div>
+            <div class="eng-row"><span>Positive sentiment</span><strong>5% (111 mentions)</strong></div>
+            <div class="eng-row"><span>Avg Presence Score</span><strong>72/100 — higher than 85% of brands</strong></div>
+            <div class="eng-row"><span>Social interactions</span><strong>646K total</strong></div>
+            <div class="eng-row"><span>Per-mention engagement</span><strong>~292 interactions/mention</strong></div>
+            <div class="eng-row"><span>Top platform</span><strong>News (1,504 of 2,210 mentions)</strong></div>
+            <div class="eng-row"><span>Highest single-day reach</span><strong>3.39M (March 31 — CNN TikTok, 14M followers)</strong></div>
+          </div>
+          <div class="eng-box anti-z">
+            <h4>Anti-Zionism Dataset</h4>
+            <div class="eng-row"><span>Total mentions</span><strong>121 (–15% from prior period)</strong></div>
+            <div class="eng-row"><span>Total reach</span><strong>1.3M (–52%)</strong></div>
+            <div class="eng-row"><span>Negative sentiment</span><strong>38% (46 mentions) — rising from 30%</strong></div>
+            <div class="eng-row"><span>Positive sentiment</span><strong>10% (12 mentions) — more polarized</strong></div>
+            <div class="eng-row"><span>Avg Presence Score</span><strong>71/100 — higher than 85% of brands</strong></div>
+            <div class="eng-row"><span>Social interactions</span><strong>245K total</strong></div>
+            <div class="eng-row"><span>Per-mention engagement</span><strong>~2,025 interactions/mention (4× higher)</strong></div>
+            <div class="eng-row"><span>Top platform</span><strong>TikTok (83 of 121 mentions — 69%)</strong></div>
+            <div class="eng-row"><span>Highest single-day reach</span><strong>709K (April 10 — @nadia.khaledd, 754K followers)</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pull-quote">
+        <p>The antisemitism conversation is large, platform-diverse, and analytically framed. The anti-Zionism conversation is small, TikTok-concentrated, and ideologically charged — and per-mention, it is four times more engaging.</p>
+        <cite>— AI Stress Test Finding, Brand24 Dataset Analysis · All Three Systems Consistent</cite>
+      </div>
+
+      <div style="margin-top:8px;">
+        <div class="eyebrow" style="margin-bottom:14px;">What Each Audience Sees — The Two Information Environments</div>
+        <div class="gap-grid">
+          <div class="gap-card">
+            <h4>18–24 Students (TikTok + YouTube)</h4>
+            <ul>
+              <li>Anti-Zionism content: 83/121 mentions on TikTok (69%) — zero on news</li>
+              <li>Campus/youth TikTok top hashtags: #hillel, #antisemitism, #jewish, #passover, #csun</li>
+              <li>U.S. campus conversation: 39% positive, 7% negative — mostly affirming Jewish identity</li>
+              <li>Top voices: Unpacked (YouTube, 50.7% share of voice), Hillel, ABC News Australia</li>
+              <li>Zero Twitter/X, zero Facebook, zero news sites in campus-filtered data</li>
+            </ul>
+          </div>
+          <div class="gap-card dark">
+            <h4 style="color:var(--white)">Campus Leadership (News + Institutional)</h4>
+            <ul>
+              <li>Antisemitism: 1,504 of 2,210 mentions in News (68%) — dominant framing channel</li>
+              <li>Top news hashtags: #freepalestine (253), #antisemitism (105), #palestine, #gaza</li>
+              <li>Conversation declining: antisemitism down 31%, anti-Zionism down 15% from prior period</li>
+              <li>Top influencers: CNN TikTok (14M followers), Middle East Eye (top reach driver)</li>
+              <li>Policy framing: ADL, congressional hearings, DOJ/Harvard lawsuit, UK campus surveys</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="interp-box" style="margin-top:28px;">
+        <strong>AI Stress Test Finding — Brand24 (All 3 AIs Consistent, Claude Most Granular)</strong>
+        <p>All three AI systems agreed that TikTok dominates campus-relevant conversation and that anti-Zionism carries higher proportional negativity than antisemitism (38% vs 24%). Claude uniquely identified that U.S.-filtered campus conversation about Jewish student life is the only dataset with clearly positive majority sentiment — a finding that directly contradicts the assumption that campus conversations about these topics are uniformly hostile. Claude also identified the 24% stable negative rate in "direct" filtered content as a structural pattern, not a one-time spike. Campus leadership that assumes all online discourse about antisemitism is crisis-level has not filtered for campus-specific context.</p>
+      </div>
+    </div>
+
+    <!-- ══ PANEL C: COMSCORE + AI STRESS TEST ══ -->
+    <div class="evidence-panel" id="panel-c">
+      <div class="eyebrow">Teams 3 &amp; 4 · Comscore Audience Data + AI Stress Test · February–April 2026</div>
+      <h3 style="font-size:20px;font-weight:800;color:var(--navy);margin-bottom:10px;">The Pattern: Who Owns the Conversation — and How AI Mediates It</h3>
+      <p class="s-body">Comscore demographic data quantifies which news properties actually reach college-age students — and the gap between where students get information and where administrators assume they do. The AI stress test, applied across all three datasets, documents how Claude, ChatGPT, and Gemini responded differently to the same questions, compounding rather than resolving the vocabulary gap students face.</p>
+
+      <div style="margin-top:32px;">
+        <div class="eyebrow" style="margin-bottom:14px;">Where Gen Z College Students (18–24, n=7.07M) Actually Get News — February 2026</div>
+        <div class="comscore-grid">
+          <div class="cms-card">
+            <div class="cms-label">NYT.com</div>
+            <div class="cms-bar-wrap"><div class="cms-bar cb-r" style="width:100%"></div></div>
+            <div class="cms-stat">30.0%</div>
+            <div class="cms-sub">reach — highest of all measured properties. 2,122,000 unique visitors; 29.8M total views</div>
+          </div>
+          <div class="cms-card">
+            <div class="cms-label">BBC News</div>
+            <div class="cms-bar-wrap"><div class="cms-bar cb-gold" style="width:47%"></div></div>
+            <div class="cms-stat">14.1%</div>
+            <div class="cms-sub">reach — 994,000 unique visitors. 2.2M total views vs NYT's 29.8M</div>
+          </div>
+          <div class="cms-card">
+            <div class="cms-label">Inside Higher Ed</div>
+            <div class="cms-bar-wrap"><div class="cms-bar cb-grn" style="width:42%"></div></div>
+            <div class="cms-stat">12.5%</div>
+            <div class="cms-sub">reach — notable given niche audience scope; strong over-indexing for campus audience</div>
+          </div>
+          <div class="cms-card">
+            <div class="cms-label">NPR</div>
+            <div class="cms-bar-wrap"><div class="cms-bar cb-g" style="width:25%"></div></div>
+            <div class="cms-stat">7.6%</div>
+            <div class="cms-sub">reach — 539,000 unique visitors. Indexes below NYT for this age group</div>
+          </div>
+          <div class="cms-card">
+            <div class="cms-label">AP News</div>
+            <div class="cms-bar-wrap"><div class="cms-bar cb-n" style="width:18%"></div></div>
+            <div class="cms-stat">5.4%</div>
+            <div class="cms-sub">reach — 384,000 unique visitors. Wire-service coverage largely bypasses Gen Z</div>
+          </div>
+          <div class="cms-card">
+            <div class="cms-label">Guardian US</div>
+            <div class="cms-bar-wrap"><div class="cms-bar cb-n" style="width:10%"></div></div>
+            <div class="cms-stat">2.9–4.8%</div>
+            <div class="cms-sub">reach — 208,000–339,000 depending on desktop vs. mobile. Minimal Gen Z penetration</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:32px;">
+        <div class="eyebrow" style="margin-bottom:14px;">The Engagement Asymmetry — What Students Are Algorithmically More Likely to See</div>
+        <div class="eng-compare">
+          <div class="eng-box anti-z">
+            <h4>Anti-Zionist / Pro-Palestinian Content (Instagram)</h4>
+            <div class="eng-row"><span>Variety — Javier Bardem "Free Palestine" at Oscars</span><strong>978,993 total actions</strong></div>
+            <div class="eng-row"><span>Angelina Jolie — Gaza Instagram post</span><strong>695,861 total actions</strong></div>
+            <div class="eng-row"><span>Vic Mensa — pro-Palestinian reel</span><strong>672,756 total actions</strong></div>
+            <div class="eng-row"><span>Average per post (top 3)</span><strong>~782,000 actions</strong></div>
+          </div>
+          <div class="eng-box anti-s">
+            <h4>Antisemitism-Awareness Content (News)</h4>
+            <div class="eng-row"><span>Fox News — DOJ suing Harvard (audience: 34.8M)</span><strong>12,091 total actions</strong></div>
+            <div class="eng-row"><span>LBC — Tony Blair antisemitism post</span><strong>13,733 total actions</strong></div>
+            <div class="eng-row"><span>CBN News — Ted Cruz antisemitism warning</span><strong>12,785 total actions</strong></div>
+            <div class="eng-row"><span>Average per post (top 3)</span><strong>~12,900 actions</strong></div>
+          </div>
+        </div>
+        <p style="font-size:13px;color:var(--muted);margin-top:12px;padding:10px 14px;background:#fff3cd;border-left:3px solid #e6a817;border-radius:0 4px 4px 0;">Anti-Zionist content generates approximately <strong style="color:var(--navy)">60× more social engagement per post</strong> than antisemitism-awareness content on the same platforms. Because campus-age students primarily access this topic via Instagram and YouTube — where anti-Zionist content dominates — they are algorithmically more likely to encounter pro-Palestinian framing than antisemitism-as-hate-crime framing.</p>
+      </div>
+
+      <div style="margin-top:40px;">
+        <div class="eyebrow">AI Stress Test · All Three Datasets · Claude / ChatGPT / Gemini</div>
+        <h4 style="font-size:18px;font-weight:800;color:var(--navy);margin:8px 0;">How Three AI Systems Responded to Boundary Questions</h4>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:4px;">Same prompts applied across all three dataset loggers (Brand24, Comscore, Google Trends). Color-coded by response type. Consistency notes drawn directly from the AI Stress Test Logger records.</p>
+        <div class="table-legend">
+          <div class="leg-item"><div class="leg-dot g"></div>Direct Answer</div>
+          <div class="leg-item"><div class="leg-dot y"></div>Hedged Response</div>
+          <div class="leg-item"><div class="leg-dot r"></div>Declined / Inaccurate</div>
+        </div>
+        <div class="ai-wrap">
+          <table class="ai-table">
+            <thead>
+              <tr><th style="width:28%">Question / Dataset</th><th>Claude</th><th>ChatGPT</th><th>Gemini</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="q-cell">Key findings summary — Brand24 data</td>
+                <td><span class="badge bg">Most Complete</span><span class="bt">Cited Presence Score rankings, per-dataset breakdowns, and % changes. Most precise and comprehensive per logger notes.</span></td>
+                <td><span class="badge bg">Accurate</span><span class="bt">Correctly summarized core findings. Did not note Presence Score rankings or specific dataset comparisons.</span></td>
+                <td><span class="badge by">Partial</span><span class="bt">Added detail about CNN/Middle East Eye as top influencers. Missed SMACC White Paper and Jewish Students datasets.</span></td>
+              </tr>
+              <tr>
+                <td class="q-cell">Statistical significance — what stands out?</td>
+                <td><span class="badge bg">Direct</span><span class="bt">Identified 4× per-mention engagement gap for anti-Zionism vs. antisemitism. Single-day reach spike of 3.39M (March 31). Verified per logger as "most complete."</span></td>
+                <td><span class="badge by">Partial</span><span class="bt">Did not cite specific figures. Identified engagement patterns directionally correct but no data citations per logger.</span></td>
+                <td><span class="badge bg">Direct</span><span class="bt">Identified +3,250% surge in U.S. Jewish Students mentions and +2,768% increase in shares — specific figures not raised by others.</span></td>
+              </tr>
+              <tr>
+                <td class="q-cell">Comscore audience data — who is engaging?</td>
+                <td><span class="badge bg">Most Accurate</span><span class="bt">Correctly distinguished Content Explorer (publisher-level) from Demographic Profile (segment-level). Noted 25–54 skew for antisemitism coverage.</span></td>
+                <td><span class="badge br">Inaccurate</span><span class="bt">Per logger: "vague and doesn't cite any Comscore segment or property data." Non-citable for white paper.</span></td>
+                <td><span class="badge by">Partial</span><span class="bt">Correctly identified NYT 30% Gen Z reach and Variety 978K figure. Conflated Gen Z with Millennial segments in one response.</span></td>
+              </tr>
+              <tr>
+                <td class="q-cell">Are students trying to distinguish antisemitism from anti-Zionism?</td>
+                <td><span class="badge bg">Direct</span><span class="bt">Confirmed definitional Breakout queries show active seeking of distinction. But noted behavioral data shows two separate discourse communities in practice — not one linked conversation.</span></td>
+                <td><span class="badge by">Hedged</span><span class="bt">"Not clearly separated in engagement patterns" — per logger: inaccurate on data structure. Non-citable.</span></td>
+                <td><span class="badge bg">Direct</span><span class="bt">Identified Munk Debate queries and search pairings. Noted "Free Palestine" and "Apartheid" co-move while "Anti-Zionism" is categorized separately.</span></td>
+              </tr>
+              <tr>
+                <td class="q-cell">Google Trends — most statistically significant data point?</td>
+                <td><span class="badge bg">Direct</span><span class="bt">Uniquely identified: Oct 7 antisemitism index (35) was 65% lower than Kanye West celebrity controversy (100). Per logger: "highly significant analytically and not raised by the other two."</span></td>
+                <td><span class="badge bg">Direct</span><span class="bt">Correctly identified Antisemitism peak at 100 (Oct 2022), Anti-Zionism near-zero baseline, and Free Palestine event-driven surge.</span></td>
+                <td><span class="badge bg">Direct</span><span class="bt">Correctly identified Apartheid ceiling (100, Oct 2023), Breakout celebrity queries (+2,500%), and rising floor of "Free Palestine."</span></td>
+              </tr>
+              <tr>
+                <td class="q-cell">What should campus leadership understand? (Comscore)</td>
+                <td><span class="badge bg">Most Policy-Relevant</span><span class="bt">Only response to surface 60× engagement asymmetry between anti-Zionist content and antisemitism-awareness content. Connected to algorithmic exposure risk for campus-age students.</span></td>
+                <td><span class="badge by">Surface-Level</span><span class="bt">Correct but generic: "primarily encountering through mainstream digital news and social media amplification." No specific metrics.</span></td>
+                <td><span class="badge by">Partial</span><span class="bt">Correctly cited NYT 30% reach and emotional celebrity-driven framing. Did not identify the engagement asymmetry between content types.</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="ai-note consistent" style="margin-top:16px;">
+          <strong>Overall AI Stress Test Assessment:</strong> Claude produced the most complete, granular, and policy-relevant responses across all three dataset loggers. ChatGPT was non-citable on Comscore questions and produced data-agnostic answers on several Brand24 questions. Gemini added unique findings on specific metrics (3,250% mention surge, top influencer identification) but had partial inaccuracies on methodology questions. The stress test itself is a finding: students querying AI for help understanding this topic receive structurally different answers depending on the system — which compounds rather than resolves the vocabulary gap.
+        </div>
+      </div>
+
+      <div class="interp-box" style="margin-top:28px;">
+        <strong>Leadership Interpretation — Comscore + AI Stress Test</strong>
+        <p>The audience actively following antisemitism coverage in traditional/legacy media is more likely aged 25–54 than 18–24. Gen Z College Students represent only 2.9% of the measurable U.S. adult internet audience (7.07M of 244.2M). The properties that over-index for this group — NYT (30%), BBC (14.1%), Inside Higher Ed (12.5%) — are not where antisemitism-related content generates its highest engagement. Anti-Zionist and pro-Palestinian content on Instagram generates 50–80× the social actions of antisemitism-awareness reporting posts. Campus-age students are algorithmically more likely to encounter pro-Palestinian framing than antisemitism-as-hate-crime framing — and when they turn to AI for definitional clarity, they receive inconsistent answers.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════
+     IV — RECOMMENDATIONS
+═══════════════════════════════ -->
+<hr class="rule" />
+<section id="recommendations">
+  <div class="s-wrap fade-in">
+    <div class="eyebrow">Section IV</div>
+    <h2 class="s-title">Recommendations for Campus Leadership</h2>
+    <div class="divider"></div>
+    <p class="s-body">Three specific, realistic actions grounded in the data above. Each addresses a documented gap between the information ecosystem students inhabit and the institutional infrastructure campus leadership has built. Each includes a foreseeable trade-off.</p>
+    <div class="rec-grid">
+      <div class="rec-card">
+        <div class="rec-num">01</div>
+        <h3>Recalibrate Institutional Communication Channels</h3>
+        <p>The university must meet students where they are — TikTok and YouTube, not press releases and email. The Brand24 campus/youth data is unambiguous: zero Twitter/X, zero Facebook, zero news sites appear in the campus-filtered datasets. The conversation is entirely on video and visual platforms.</p>
+        <p>Develop short-form explainer content that directly addresses contested terms in clear, non-punitive language. Institutional silence on terms like decolonization, apartheid, and anti-Zionism does not signal neutrality — it signals irrelevance. U.S. campus content about Jewish student life is already 39% positive in the Brand24 data; build on that foundation.</p>
+        <div class="rec-evidence">Evidence tie-back: Anti-Zionism is 69% TikTok-concentrated with zero news coverage. Official campus statements on these terms are entering an information environment the institution does not currently monitor or participate in.</div>
+        <div class="rec-tradeoff">Trade-off: Engaging contested vocabulary carries reputational risk. Mitigation: co-develop content with student advisory groups across the political spectrum; frame all engagement as comprehension, not position-taking.</div>
+        <span class="rec-tag">Communication</span>
+      </div>
+      <div class="rec-card">
+        <div class="rec-num">02</div>
+        <h3>Update Dialogue &amp; Incident-Response Frameworks</h3>
+        <p>Any training, dialogue, or incident-response protocol that ignores the decolonization and anti-Zionism vocabulary will miss how students are actually thinking. Google Trends confirms this vocabulary has been building for five years through academic curricula and creator content — it predates any single campus incident and will not recede.</p>
+        <p>The Comscore data includes a Haaretz-cited UK campus survey (n=1,000, Jan–Feb 2026) showing nearly 1 in 4 British students witnessed behaviors targeting Jews on campus. Retrain Title VI officers with a contextual decision framework that accounts for both documented campus antisemitism and the distinct vocabulary communities that frame the conflict differently.</p>
+        <div class="rec-evidence">Evidence tie-back: TikTok sentiment on this topic scores 29% positive — the same topic runs 88% negative in news coverage. Students and administrators are experiencing the same conflict in fundamentally different emotional registers, not just different words.</div>
+        <div class="rec-tradeoff">Trade-off: Some faculty and legal counsel may resist engaging activist vocabulary. Mitigation: frame as comprehension, not endorsement — understanding a vocabulary is not the same as adopting it as institutional policy.</div>
+        <span class="rec-tag">Policy &amp; Training</span>
+      </div>
+      <div class="rec-card">
+        <div class="rec-num">03</div>
+        <h3>Build an Ongoing Digital Intelligence Capability</h3>
+        <p>Use this project's data workflow as a prototype for a standing early-warning tool. The Brand24 data shows micro-accounts with as few as 44 followers generating millions of views through algorithmic amplification — the velocity at which vocabulary spreads through the 18–24 information ecosystem means reactive institutional response is structurally too slow.</p>
+        <p>Establish light-touch governance around AI use on campus. The AI stress test documents that students receive structurally different answers to the same questions depending on which system they use. ChatGPT was non-citable on methodology questions; Gemini had partial inaccuracies. Providing institutionally vetted resources for contested terms is a low-cost, high-impact intervention.</p>
+        <div class="rec-evidence">Evidence tie-back: The U.S. campus Jewish Students dataset went from 2 mentions to 67 in one reporting period (+3,250%) — a sudden activation event that a monitoring capability would have detected early.</div>
+        <div class="rec-tradeoff">Trade-off: Ongoing monitoring raises surveillance concerns. Mitigation: monitor public signals only; publish methodology transparently; distinguish monitoring from tracking individuals.</div>
+        <span class="rec-tag">Infrastructure</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════
+     V — CONCLUSION
+═══════════════════════════════ -->
+<hr class="rule" />
+<section id="conclusion" class="bg-light">
+  <div class="s-wrap fade-in">
+    <div class="eyebrow">Section V</div>
+    <h2 class="s-title">Conclusion</h2>
+    <div class="divider"></div>
+    <div class="conclusion-wrap">
+      <p>Apartheid is the most revealing gap in this entire dataset. Every major human rights organization applied it to the conflict. International courts debated it. And it produced <strong>zero YouTube search signal across five years — in 48 of 50 states.</strong> The term that institutions most loudly adopted is the term the public most completely ignored — because it traveled through written reports, not through video. That inversion is not an accident. It is the clearest statement the data makes about how vocabulary actually moves in 2026.</p>
+      <p>Students and campus leadership are not just disagreeing about events. They are operating with <strong>different information diets, different vocabularies, and different emotional frames</strong> — all produced by digital ecosystems that institutional leadership does not currently monitor. Anti-Zionist content generates 60× more social engagement per post than antisemitism-awareness content on the same platforms. U.S. campus conversation about Jewish student life is 39% positive — a fact the aggregate data obscures entirely. Micro-accounts with 44 followers are reaching millions of students. And when those students turn to AI for definitional clarity, they receive structurally inconsistent answers.</p>
+      <p>The question for campus leadership is not whether to engage with this ecosystem. It is whether to engage intentionally, or by default — with evidence, or without it.</p>
+      <div class="action-box">
+        <p>Not that young people are uninformed. That they're informed differently, by different institutions, in a different language — and the gap between those languages is now measurable. That's what this report documents. That's what leadership now has the evidence to act on.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════
+     VI — REFERENCES
+═══════════════════════════════ -->
+<hr class="rule" />
+<section id="references">
+  <div class="s-wrap fade-in">
+    <div class="eyebrow">Section VI</div>
+    <h2 class="s-title">References</h2>
+    <div class="divider"></div>
+    <p class="s-body" style="margin-bottom:36px;">Consolidated sources across all four research teams. All figures cited in this report are cross-verified from the AI Stress Test Logger records.</p>
+    <div class="ref-group">
+      <h3>Search &amp; Trend Data</h3>
+      <ul class="ref-list">
+        <li>Google Trends. (2021–2026). Cross-platform search interest: YouTube Search, Web Search, and News Search filters for Antisemitism, Anti-Zionism, Decolonization, Apartheid, and Free Palestine. United States. <a href="https://trends.google.com" target="_blank">trends.google.com</a></li>
+        <li>AI Stress Test Logger v2 — Google Trends. (2026). Structured AI analysis of Google Trends data across Claude, ChatGPT, and Gemini. Internal research document, Spring 2026 Capstone Project. [10 questions, all three AIs, findings cross-verified.]</li>
+        <li>Cross-Platform Synthesis Report. (2026). "Three Platforms, Three Vocabularies." Internal research document, Spring 2026 Capstone Project.</li>
+      </ul>
+    </div>
+    <div class="ref-group">
+      <h3>Social Listening &amp; Sentiment Analysis</h3>
+      <ul class="ref-list">
+        <li>Brand24. (2026). Social listening datasets: Antisemitism (2,210 mentions, 24M reach), Anti-Zionism (121 mentions, 1.3M reach), Jewish Students — General (135 mentions), Jewish Students — US Filter (67 mentions), SMACC White Paper topic (217 mentions). Period: March 30–April 13, 2026.</li>
+        <li>AI Stress Test Logger v2 — Brand24. (2026). Structured AI analysis of Brand24 data across Claude, ChatGPT, and Gemini. Internal research document, Spring 2026 Capstone Project. [10 questions; Claude identified as most complete and most accurate per logger notes.]</li>
+      </ul>
+    </div>
+    <div class="ref-group">
+      <h3>Audience &amp; Engagement Data</h3>
+      <ul class="ref-list">
+        <li>Comscore. (2026). Demographic Profile Reports — February 2026. Audience segments measured: 18+ Total (244.2M), Gen Z College Students (7.07M / 2.9%), Millennial Professionals (87.7M / 35.9%), Gen X High-Income Households (83.6M / 34.2%). Properties measured: NYT.com, BBC News, AP News, NPR, Inside Higher Ed, Chronicle.com, Guardian US News, PBS NewsHour.</li>
+        <li>Comscore. (2026). Content Explorer Reports — January–April 2026. Total actions, third file (Mar–Apr 2026): 54,731,906. Total video views: 651,189,538. Total Instagram Reel Views: 297,664,102.</li>
+        <li>AI Stress Test Logger v2 — Comscore. (2026). Structured AI analysis of Comscore data across Claude, ChatGPT, and Gemini. Internal research document, Spring 2026 Capstone Project. [10 questions; ChatGPT non-citable on methodology; Claude most accurate per logger notes.]</li>
+      </ul>
+    </div>
+    <div class="ref-group">
+      <h3>Secondary Sources</h3>
+      <ul class="ref-list">
+        <li>International Holocaust Remembrance Alliance. (2016). Working definition of antisemitism. <a href="https://www.holocaustremembrance.com" target="_blank">holocaustremembrance.com</a></li>
+        <li>U.S. Department of Education, Office for Civil Rights. (2023). Dear Colleague Letter on Title VI and shared ancestry. <a href="https://www.ed.gov" target="_blank">ed.gov</a></li>
+        <li>Amnesty International. (2022). Israel's Apartheid Against Palestinians. <a href="https://www.amnesty.org" target="_blank">amnesty.org</a></li>
+        <li>Human Rights Watch. (2021). A Threshold Crossed: Israeli Authorities and the Crimes of Apartheid and Persecution. <a href="https://www.hrw.org" target="_blank">hrw.org</a></li>
+        <li>Haaretz / Union of Jewish Students. (2026). UK campus survey: nearly 1 in 4 British students witnessed behaviors targeting Jews on campus. Survey n=1,000, January 26–February 4, 2026.</li>
+        <li>UCLA Graduate Writing Center. White paper formatting guidelines. Stanford Law School. Policy memo writing standards.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-logo">The Generation Gap · Campus Intelligence Report · Spring 2026</div>
+  <p>Produced by the INTERPRET Team · [Your University Name] · Research Methods Capstone</p>
+  <div class="f-links">
+    <a href="https://github.com/adachalexa/AntiZionismMockUp" target="_blank">View on GitHub</a>
+    <a href="#">Download White Paper</a>
+    <a href="#">Contact the Team</a>
+  </div>
+  <p style="margin-top:18px;font-size:12px;color:rgba(255,255,255,.25);">&copy; 2026 · All content is for academic research purposes</p>
+</footer>
+
+<script>
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('nav-list').classList.toggle('open');
+  });
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', function(e) {
+      const t = document.querySelector(this.getAttribute('href'));
+      if (t) { e.preventDefault(); document.getElementById('nav-list').classList.remove('open'); t.scrollIntoView({ behavior:'smooth', block:'start' }); }
+    });
+  });
+  const secs = document.querySelectorAll('section[id]');
+  const navAs = document.querySelectorAll('.nav-link');
+  window.addEventListener('scroll', () => {
+    let cur = '';
+    secs.forEach(s => { if (window.scrollY >= s.offsetTop - 90) cur = s.id; });
+    navAs.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+  }, { passive:true });
+  const fo = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); fo.unobserve(e.target); } });
+  }, { threshold:0.08 });
+  document.querySelectorAll('.fade-in').forEach(el => fo.observe(el));
+  document.querySelectorAll('.etab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.etab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.evidence-panel').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.panel).classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
